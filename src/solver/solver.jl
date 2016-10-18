@@ -4,4 +4,4 @@ include("trunk.jl")
 using Lbfgsb
 include("L-BFGS-B.jl")
 
-using JPDJPD
+using ARCTR

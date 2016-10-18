@@ -37,16 +37,17 @@ function run_problems(solver :: Symbol, problems :: Vector{Symbol}, dim :: Int; 
   nprobs = length(problems)
   verbose = nprobs ≤ 1
   stats = -ones(nprobs, 3)
-  k = 1
+  k = 0
   for problem in problems
     try
       (f, g, h) = run_problem(solver, problem, dim, verbose=verbose; args...)
-      stats[k, :] = [f, g, h]
       k = k + 1
+      stats[k, :] = [f, g, h]
     catch e
       isa(e, SkipException) || rethrow(e)
     end
   end
+  stats = stats[1:k,:]
   return stats
 end
 
