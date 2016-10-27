@@ -34,13 +34,15 @@ function solve_problems(solver :: Function, problems :: Any; prune :: Bool=true,
   stats = -ones(nprobs, 3)
   k = 0
   for problem in problems
-    try
+    try  
       (f, g, h) = solve_problem(solver, problem, verbose=verbose; kwargs...)
       k = k + 1
       stats[k, :] = [f, g, h]
     catch e
       isa(e, SkipException) || rethrow(e)
+      @printf("%-15s  skipped \n",problem.meta.name)
     end
+    finalize(problem)
   end
   return prune ? stats[1:k, :] : stats
 end
@@ -78,7 +80,9 @@ function solve_problem(solver :: Function, nlp :: AbstractNLPModel; kwargs...)
     (x, f, gNorm, iter, optimal, tired, status) = solver(nlp; args...)
   catch e
     println(e)
-    status = e.msg
+    try status = e.msg
+        catch println("Untraced exception")
+    end
   end
   # if nlp.scale_obj
   #   f /= nlp.scale_obj_factor

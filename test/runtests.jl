@@ -35,7 +35,7 @@ end
 
 # test benchmark helpers, skip constrained problems (hs7 has constraints)
 solve_problem(trunk, AmplModel("dixmaanj"), verbose=true, monotone=false)
-probs = [dixmaane, dixmaanf, dixmaang, dixmaanh, dixmaani, dixmaanj, hs7]
+probs = [dixmaane, dixmaanf, dixmaang, hs7, dixmaanh, dixmaani, dixmaanj]
 
 # here we use array comprehension to pass on julia 0.4
 # a generator should be used on julia ≥ 0.5
