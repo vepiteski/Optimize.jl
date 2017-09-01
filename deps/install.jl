@@ -4,21 +4,10 @@ import Compat.String
 
 const home = "https://github.com/JuliaSmoothOptimizers"
 
-if VERSION ≥ v"0.5"
-  const deps = Dict{String, String}(
-                "OptimizationProblems" => "master",
-                "Krylov" => "develop",
-                "AmplNLReader" => "master",
-                "BenchmarkProfiles" => "master")
-else
-  const deps = Dict{String, String}(
-                "OptimizationProblems" => "master",
-                "Krylov" => "develop",
-                "AmplNLReader" => "master")
-end
-
-const unix_deps = Dict{String, String}(
-              "CUTEst" => "develop")
+const deps = Dict{String, String}(
+              "OptimizationProblems" => "master",
+              "Krylov" => "develop",
+              "BenchmarkProfiles" => "master")
 
 function dep_installed(dep)
   try
@@ -43,4 +32,3 @@ function deps_install(deps)
 end
 
 deps_install(deps)
-@static if is_unix() deps_install(unix_deps); end

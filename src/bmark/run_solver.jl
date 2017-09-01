@@ -24,7 +24,7 @@ Apply a solver to a set of problems.
 * any other keyword argument accepted by `run_problem()`
 
 #### Return value
-* an `Array(Int, nprobs, 3)` where `nprobs` is the number of problems in the problem.
+* an `Array{Int}(nprobs, 3)` where `nprobs` is the number of problems in the problem.
   See the documentation of `solve_problem()` for the form of each entry.
 """
 function solve_problems(solver :: Function, problems :: Any; prune :: Bool=true, kwargs...)
@@ -38,6 +38,7 @@ function solve_problems(solver :: Function, problems :: Any; prune :: Bool=true,
       (f, g, h) = solve_problem(solver, problem, verbose=verbose; kwargs...)
       k = k + 1
       stats[k, :] = [f, g, h]
+      finalize(problem)
     catch e
       isa(e, SkipException) || rethrow(e)
     end
